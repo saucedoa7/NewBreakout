@@ -10,6 +10,6 @@
 
 @interface ViewController : UIViewController
 
-@property int collideCount;
+@property int livesCount;
 @end
 

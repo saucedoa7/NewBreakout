@@ -25,6 +25,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
+    self.livesCount = 3;
+    NSLog(@"Lives Started: %d", self.livesCount);
+
     self.ballView.layer.cornerRadius = self.ballView.frame.size.width / 2;
     self.ballView.clipsToBounds = YES;
 
@@ -38,17 +41,23 @@
 
     self.dynamicAnimator = [[UIDynamicAnimator alloc] initWithReferenceView:self.view];
 
+    #pragma mark Push Behaviors
+
     self.pushBehavior = [[UIPushBehavior alloc] initWithItems:@[self.ballView] mode:UIPushBehaviorModeInstantaneous];
     self.pushBehavior.pushDirection = CGVectorMake(randomDirectionX, randomDirectionY);
     self.pushBehavior.active = YES;
     self.pushBehavior.magnitude = randomMagnintude;
     [self.dynamicAnimator addBehavior:self.pushBehavior];
 
+    #pragma mark Collision Behaviors
+
     self.collisionBehavior = [[UICollisionBehavior alloc] initWithItems:@[self.paddleView, self.ballView]];
     self.collisionBehavior.collisionMode = UICollisionBehaviorModeEverything;
     self.collisionBehavior.collisionDelegate = self;
     self.collisionBehavior.translatesReferenceBoundsIntoBoundary = YES;
     [self.dynamicAnimator addBehavior:self.collisionBehavior];
+
+    #pragma mark Dynamic Item Animatiors
 
     self.dynamicBallBehavior = [[UIDynamicItemBehavior alloc] initWithItems:@[self.ballView]];
     self.dynamicBallBehavior.allowsRotation = NO;
@@ -68,10 +77,18 @@
 }
 
 -(void)collisionBehavior:(UICollisionBehavior *)behavior beganContactForItem:(id<UIDynamicItem>)item withBoundaryIdentifier:(id<NSCopying>)identifier atPoint:(CGPoint)p{
-    self.collideCount++;
-    NSLog(@"Collided  x%d", self.collideCount);
+
 
     if (p.y > 595) {
+
+        self.livesCount--;
+
+        if (self.livesCount == 0) {
+            NSLog(@"Game Over!");
+            self.livesCount = 3;
+        }
+        NSLog(@"Lives left: %d", self.livesCount);
+
         //  This method resets the ball when it travels off the frame, and
         //  re-initializes the ball and its behavior for a fresh instance
         //  of the ball.
@@ -86,7 +103,7 @@
         self.pushBehavior.active = YES;
     }
 
-    NSLog(@"CGPoint %@", NSStringFromCGPoint(p));
+    //NSLog(@"CGPoint %@", NSStringFromCGPoint(p));
 
 }
 - (IBAction)draggPaddle:(UIPanGestureRecognizer *)sender {
