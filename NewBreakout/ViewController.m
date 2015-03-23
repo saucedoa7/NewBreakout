@@ -31,19 +31,18 @@
     [self.view addSubview:self.paddleView];
     [self.view addSubview:self.ballView];
 
-    self.dynamicAnimator = [[UIDynamicAnimator alloc] initWithReferenceView:self.view];
-
     float randomDirectionX = ((int)arc4random_uniform(21) -10)/(float)10;
     float randomDirectionY = (arc4random()%10 +1)/(float)10;
-    float randomMagnintude = .10; //((arc4random()%(8 - 4))+4)/(float)10;
+    float randomMagnintude = .30; //((arc4random()%(8 - 4))+4)/(float)10;
     NSLog(@"Rando %.2f = X, %.2f = Y, %.2f = Mag", randomDirectionX, randomDirectionY, randomMagnintude);
+
+    self.dynamicAnimator = [[UIDynamicAnimator alloc] initWithReferenceView:self.view];
 
     self.pushBehavior = [[UIPushBehavior alloc] initWithItems:@[self.ballView] mode:UIPushBehaviorModeInstantaneous];
     self.pushBehavior.pushDirection = CGVectorMake(randomDirectionX, randomDirectionY);
     self.pushBehavior.active = YES;
     self.pushBehavior.magnitude = randomMagnintude;
     [self.dynamicAnimator addBehavior:self.pushBehavior];
-
 
     self.collisionBehavior = [[UICollisionBehavior alloc] initWithItems:@[self.paddleView, self.ballView]];
     self.collisionBehavior.collisionMode = UICollisionBehaviorModeEverything;
@@ -72,10 +71,19 @@
     self.collideCount++;
     NSLog(@"Collided  x%d", self.collideCount);
 
-    if (p.y > 580) {
-        NSLog(@":D");
-        float reset = self.ballView.center.y;
-        NSLog(@"reset value %.2f", reset);
+    if (p.y > 595) {
+        //  This method resets the ball when it travels off the frame, and
+        //  re-initializes the ball and its behavior for a fresh instance
+        //  of the ball.
+
+        CGPoint currentVelocity = [self.dynamicBallBehavior linearVelocityForItem:self.ballView];
+        [self.dynamicBallBehavior addLinearVelocity:CGPointMake(-currentVelocity.x, -currentVelocity.y)
+                                            forItem:self.ballView];
+        self.ballView.center = CGPointMake(175, 80);
+        [self.dynamicAnimator updateItemUsingCurrentState:self.ballView];
+        self.pushBehavior.pushDirection = CGVectorMake(arc4random(), arc4random());
+        self.pushBehavior.magnitude = .3;
+        self.pushBehavior.active = YES;
     }
 
     NSLog(@"CGPoint %@", NSStringFromCGPoint(p));
