@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6751" systemVersion="14C1514" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="vXZ-lx-hvc">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6751" systemVersion="14D105g" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="vXZ-lx-hvc">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
     </dependencies>
@@ -12,18 +12,23 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
+                            <view contentMode="scaleToFill" id="p8b-gn-Lrf" customClass="BallView">
+                                <rect key="frame" x="175" y="270" width="25" height="25"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.4702005582535983" green="0.72101281421066032" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            </view>
+                            <view contentMode="scaleToFill" id="Gbs-vt-IW6" customClass="BlockView">
+                                <rect key="frame" x="25" y="45" width="33" height="33"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
                             <view contentMode="scaleToFill" id="xT4-5f-f6T" customClass="PaddleView">
-                                <rect key="frame" x="155" y="580" width="65" height="15"/>
+                                <rect key="frame" x="145" y="582" width="85" height="23"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.4202021337263433" green="0.70163446664810181" blue="0.15909912570489007" alpha="0.58999999999999997" colorSpace="calibratedRGB"/>
                                 <connections>
                                     <outletCollection property="gestureRecognizers" destination="vrc-W3-pPe" appends="YES" id="K2l-pw-JX5"/>
                                 </connections>
-                            </view>
-                            <view contentMode="scaleToFill" id="p8b-gn-Lrf" customClass="BallView">
-                                <rect key="frame" x="175" y="80" width="25" height="25"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="0.4702005582535983" green="0.72101281421066032" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
                         </subviews>
                         <color key="backgroundColor" red="0.42944717982584296" green="0.47100842299586376" blue="0.5842605744949495" alpha="1" colorSpace="calibratedRGB"/>
@@ -31,6 +36,7 @@
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
                         <outlet property="ballView" destination="p8b-gn-Lrf" id="4G3-2F-rIk"/>
+                        <outlet property="blockView" destination="Gbs-vt-IW6" id="cc9-ye-VG8"/>
                         <outlet property="paddleView" destination="xT4-5f-f6T" id="rqU-zN-Xuy"/>
                     </connections>
                 </viewController>

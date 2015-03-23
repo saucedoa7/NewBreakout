@@ -9,10 +9,12 @@
 #import "ViewController.h"
 #import "PaddleView.h"
 #import "BallView.h"
+#import "BlockView.h"
 
 @interface ViewController ()<UICollisionBehaviorDelegate>
 @property (weak, nonatomic) IBOutlet PaddleView *paddleView;
 @property (weak, nonatomic) IBOutlet BallView *ballView;
+@property (strong, nonatomic) IBOutlet BlockView *blockView;
 @property UIPushBehavior *pushBehavior;
 @property UIDynamicAnimator *dynamicAnimator;
 @property UICollisionBehavior *collisionBehavior;
@@ -33,6 +35,7 @@
 
     [self.view addSubview:self.paddleView];
     [self.view addSubview:self.ballView];
+    [self.view addSubview:self.blockView];
 
     float randomDirectionX = ((int)arc4random_uniform(21) -10)/(float)10;
     float randomDirectionY = (arc4random()%10 +1)/(float)10;
@@ -51,7 +54,7 @@
 
     #pragma mark Collision Behaviors
 
-    self.collisionBehavior = [[UICollisionBehavior alloc] initWithItems:@[self.paddleView, self.ballView]];
+    self.collisionBehavior = [[UICollisionBehavior alloc] initWithItems:@[self.paddleView, self.ballView, self.blockView]];
     self.collisionBehavior.collisionMode = UICollisionBehaviorModeEverything;
     self.collisionBehavior.collisionDelegate = self;
     self.collisionBehavior.translatesReferenceBoundsIntoBoundary = YES;
@@ -66,7 +69,7 @@
     self.dynamicBallBehavior.resistance = 0.0;
     [self.dynamicAnimator addBehavior:self.dynamicBallBehavior];
 
-    self.dynamicPaddleBehavior = [[UIDynamicItemBehavior alloc] initWithItems:@[self.paddleView]];
+    self.dynamicPaddleBehavior = [[UIDynamicItemBehavior alloc] initWithItems:@[self.paddleView, self.blockView]];
     self.dynamicPaddleBehavior.allowsRotation = NO;
     self.dynamicPaddleBehavior.friction = 0.0;
     self.dynamicPaddleBehavior.elasticity = 1.0;
@@ -96,7 +99,7 @@
         CGPoint currentVelocity = [self.dynamicBallBehavior linearVelocityForItem:self.ballView];
         [self.dynamicBallBehavior addLinearVelocity:CGPointMake(-currentVelocity.x, -currentVelocity.y)
                                             forItem:self.ballView];
-        self.ballView.center = CGPointMake(175, 80);
+        self.ballView.center = CGPointMake(175, 270);
         [self.dynamicAnimator updateItemUsingCurrentState:self.ballView];
         self.pushBehavior.pushDirection = CGVectorMake(arc4random(), arc4random());
         self.pushBehavior.magnitude = .3;
