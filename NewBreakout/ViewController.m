@@ -79,6 +79,33 @@
     
 }
 
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+
+    //Add SubView?
+
+//    BlockView *blockView = [BlockView new];
+//    self.blockView.backgroundColor = [UIColor blackColor];
+//    [self.view addSubview:self.blockView];
+//    self.blockView.frame = CGRectMake(326, 45, 33, 33);
+
+    int x=33;
+    int y=33;
+    int hei=33;
+    int wid=33;
+
+    for (int i=0; i<3; i++)
+    {
+        for(int j=0;j<3;j++)
+        {
+            self.blockView = [[BlockView alloc]initWithFrame:CGRectMake((x+wid)*i, (y+hei)*j, wid, hei)];
+            self.blockView.backgroundColor = [UIColor blackColor];
+            [self.view addSubview:self.blockView];
+            
+        }   
+    }
+}
+
 -(void)collisionBehavior:(UICollisionBehavior *)behavior beganContactForItem:(id<UIDynamicItem>)item withBoundaryIdentifier:(id<NSCopying>)identifier atPoint:(CGPoint)p{
 
 
