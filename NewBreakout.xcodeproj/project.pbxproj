@@ -15,6 +15,8 @@
 		5000BD651ABE148200389D02 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5000BD641ABE148200389D02 /* Images.xcassets */; };
 		5000BD681ABE148200389D02 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5000BD661ABE148200389D02 /* LaunchScreen.xib */; };
 		5000BD741ABE148200389D02 /* NewBreakoutTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5000BD731ABE148200389D02 /* NewBreakoutTests.m */; };
+		5000BD7F1ABE14C000389D02 /* PaddleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5000BD7E1ABE14C000389D02 /* PaddleView.m */; };
+		5000BD821ABE355200389D02 /* BallView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5000BD811ABE355200389D02 /* BallView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -42,6 +44,10 @@
 		5000BD6D1ABE148200389D02 /* NewBreakoutTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NewBreakoutTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5000BD721ABE148200389D02 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5000BD731ABE148200389D02 /* NewBreakoutTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NewBreakoutTests.m; sourceTree = "<group>"; };
+		5000BD7D1ABE14C000389D02 /* PaddleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaddleView.h; sourceTree = "<group>"; };
+		5000BD7E1ABE14C000389D02 /* PaddleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaddleView.m; sourceTree = "<group>"; };
+		5000BD801ABE355200389D02 /* BallView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BallView.h; sourceTree = "<group>"; };
+		5000BD811ABE355200389D02 /* BallView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BallView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -88,6 +94,10 @@
 				5000BD5E1ABE148200389D02 /* ViewController.h */,
 				5000BD5F1ABE148200389D02 /* ViewController.m */,
 				5000BD611ABE148200389D02 /* Main.storyboard */,
+				5000BD801ABE355200389D02 /* BallView.h */,
+				5000BD811ABE355200389D02 /* BallView.m */,
+				5000BD7D1ABE14C000389D02 /* PaddleView.h */,
+				5000BD7E1ABE14C000389D02 /* PaddleView.m */,
 				5000BD641ABE148200389D02 /* Images.xcassets */,
 				5000BD661ABE148200389D02 /* LaunchScreen.xib */,
 				5000BD5B1ABE148200389D02 /* NewBreakout.xcdatamodeld */,
@@ -225,7 +235,9 @@
 				5000BD5A1ABE148200389D02 /* AppDelegate.m in Sources */,
 				5000BD5D1ABE148200389D02 /* NewBreakout.xcdatamodeld in Sources */,
 				5000BD601ABE148200389D02 /* ViewController.m in Sources */,
+				5000BD7F1ABE14C000389D02 /* PaddleView.m in Sources */,
 				5000BD571ABE148200389D02 /* main.m in Sources */,
+				5000BD821ABE355200389D02 /* BallView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -348,6 +360,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = NewBreakout/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -358,6 +371,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = NewBreakout/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
