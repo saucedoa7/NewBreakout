@@ -33,83 +33,71 @@
     self.ballView.layer.cornerRadius = self.ballView.frame.size.width / 2;
     self.ballView.clipsToBounds = YES;
 
+    self.blockView = [BlockView new];
+
     [self.view addSubview:self.paddleView];
     [self.view addSubview:self.ballView];
     [self.view addSubview:self.blockView];
 
     float randomDirectionX = ((int)arc4random_uniform(21) -10)/(float)10;
-    float randomDirectionY = (arc4random()%10 +1)/(float)10;
+    float randomDirectionY = (arc4random()%10 +5)/(float)10;
     float randomMagnintude = .30; //((arc4random()%(8 - 4))+4)/(float)10;
     NSLog(@"Rando %.2f = X, %.2f = Y, %.2f = Mag", randomDirectionX, randomDirectionY, randomMagnintude);
 
     self.dynamicAnimator = [[UIDynamicAnimator alloc] initWithReferenceView:self.view];
-
-    #pragma mark Push Behaviors
-
-    self.pushBehavior = [[UIPushBehavior alloc] initWithItems:@[self.ballView] mode:UIPushBehaviorModeInstantaneous];
-    self.pushBehavior.pushDirection = CGVectorMake(randomDirectionX, randomDirectionY);
-    self.pushBehavior.active = YES;
-    self.pushBehavior.magnitude = randomMagnintude;
-    [self.dynamicAnimator addBehavior:self.pushBehavior];
-
-    #pragma mark Collision Behaviors
-
-    self.collisionBehavior = [[UICollisionBehavior alloc] initWithItems:@[self.paddleView, self.ballView, self.blockView]];
-    self.collisionBehavior.collisionMode = UICollisionBehaviorModeEverything;
-    self.collisionBehavior.collisionDelegate = self;
-    self.collisionBehavior.translatesReferenceBoundsIntoBoundary = YES;
-    [self.dynamicAnimator addBehavior:self.collisionBehavior];
-
-    #pragma mark Dynamic Item Animatiors
-
-    self.dynamicBallBehavior = [[UIDynamicItemBehavior alloc] initWithItems:@[self.ballView]];
-    self.dynamicBallBehavior.allowsRotation = NO;
-    self.dynamicBallBehavior.elasticity = 1.0;
-    self.dynamicBallBehavior.friction = 0.0;
-    self.dynamicBallBehavior.resistance = 0.0;
-    [self.dynamicAnimator addBehavior:self.dynamicBallBehavior];
-
-    self.dynamicPaddleBehavior = [[UIDynamicItemBehavior alloc] initWithItems:@[self.paddleView, self.blockView]];
-    self.dynamicPaddleBehavior.allowsRotation = NO;
-    self.dynamicPaddleBehavior.friction = 0.0;
-    self.dynamicPaddleBehavior.elasticity = 1.0;
-    self.dynamicPaddleBehavior.resistance = 0.0;
-    self.dynamicPaddleBehavior.density = 100000;
-    [self.dynamicAnimator addBehavior:self.dynamicPaddleBehavior];
-    
-}
-
--(void)viewWillAppear:(BOOL)animated{
-    [super viewWillAppear:animated];
-
-    //Add SubView?
-
-//    BlockView *blockView = [BlockView new];
-//    self.blockView.backgroundColor = [UIColor blackColor];
-//    [self.view addSubview:self.blockView];
-//    self.blockView.frame = CGRectMake(326, 45, 33, 33);
 
     int x=33;
     int y=33;
     int hei=33;
     int wid=33;
 
-    for (int i=0; i<3; i++)
+    for (int row=1; row<5;row++)
     {
-        for(int j=0;j<3;j++)
+        for(int column=1;column<5;column++)
         {
-            self.blockView = [[BlockView alloc]initWithFrame:CGRectMake((x+wid)*i, (y+hei)*j, wid, hei)];
-            self.blockView.backgroundColor = [UIColor blackColor];
+            self.blockView = [[BlockView alloc]initWithFrame:CGRectMake((x+wid)*row, (y+hei)*column, wid, hei)];
+            self.blockView.backgroundColor = [UIColor darkGrayColor];
             [self.view addSubview:self.blockView];
-            
-        }   
+
+#pragma mark Collision Behaviors
+
+            self.collisionBehavior = [[UICollisionBehavior alloc] initWithItems:@[self.paddleView, self.ballView, self.blockView]];
+            self.collisionBehavior.collisionMode = UICollisionBehaviorModeEverything;
+            self.collisionBehavior.collisionDelegate = self;
+            self.collisionBehavior.translatesReferenceBoundsIntoBoundary = YES;
+            [self.dynamicAnimator addBehavior:self.collisionBehavior];
+
+#pragma mark Dynamic Item Animatiors
+
+            self.dynamicBallBehavior = [[UIDynamicItemBehavior alloc] initWithItems:@[self.ballView]];
+            self.dynamicBallBehavior.allowsRotation = NO;
+            self.dynamicBallBehavior.elasticity = 1.0;
+            self.dynamicBallBehavior.friction = 0.0;
+            self.dynamicBallBehavior.resistance = 0.0;
+            [self.dynamicAnimator addBehavior:self.dynamicBallBehavior];
+
+            self.dynamicPaddleBehavior = [[UIDynamicItemBehavior alloc] initWithItems:@[self.paddleView, self.blockView]];
+            self.dynamicPaddleBehavior.allowsRotation = NO;
+            self.dynamicPaddleBehavior.friction = 0.0;
+            self.dynamicPaddleBehavior.elasticity = 1.0;
+            self.dynamicPaddleBehavior.resistance = 0.0;
+            self.dynamicPaddleBehavior.density = 100000;
+            [self.dynamicAnimator addBehavior:self.dynamicPaddleBehavior];
+        }
     }
+
+#pragma mark Push Behaviors
+
+    self.pushBehavior = [[UIPushBehavior alloc] initWithItems:@[self.ballView] mode:UIPushBehaviorModeInstantaneous];
+    self.pushBehavior.pushDirection = CGVectorMake(randomDirectionX, randomDirectionY);
+    self.pushBehavior.active = YES;
+    self.pushBehavior.magnitude = randomMagnintude;
+    [self.dynamicAnimator addBehavior:self.pushBehavior];
 }
 
 -(void)collisionBehavior:(UICollisionBehavior *)behavior beganContactForItem:(id<UIDynamicItem>)item withBoundaryIdentifier:(id<NSCopying>)identifier atPoint:(CGPoint)p{
 
-
-    if (p.y > 595) {
+    if (p.y > 605) {
 
         self.livesCount--;
 
@@ -126,7 +114,7 @@
         CGPoint currentVelocity = [self.dynamicBallBehavior linearVelocityForItem:self.ballView];
         [self.dynamicBallBehavior addLinearVelocity:CGPointMake(-currentVelocity.x, -currentVelocity.y)
                                             forItem:self.ballView];
-        self.ballView.center = CGPointMake(175, 270);
+        self.ballView.center = CGPointMake(175, 320);
         [self.dynamicAnimator updateItemUsingCurrentState:self.ballView];
         self.pushBehavior.pushDirection = CGVectorMake(arc4random(), arc4random());
         self.pushBehavior.magnitude = .3;
