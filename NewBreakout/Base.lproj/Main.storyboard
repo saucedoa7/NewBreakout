@@ -12,18 +12,18 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
+                            <view contentMode="scaleToFill" id="p8b-gn-Lrf" customClass="BallView">
+                                <rect key="frame" x="175" y="300" width="25" height="25"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.4702005582535983" green="0.72101281421066032" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            </view>
                             <view contentMode="scaleToFill" id="xT4-5f-f6T" customClass="PaddleView">
-                                <rect key="frame" x="80" y="574" width="214" height="23"/>
+                                <rect key="frame" x="150" y="574" width="74" height="23"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.4202021337263433" green="0.70163446664810181" blue="0.15909912570489007" alpha="0.58999999999999997" colorSpace="calibratedRGB"/>
                                 <connections>
                                     <outletCollection property="gestureRecognizers" destination="vrc-W3-pPe" appends="YES" id="K2l-pw-JX5"/>
                                 </connections>
-                            </view>
-                            <view contentMode="scaleToFill" id="p8b-gn-Lrf" customClass="BallView">
-                                <rect key="frame" x="175" y="300" width="25" height="25"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="0.4702005582535983" green="0.72101281421066032" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
                         </subviews>
                         <color key="backgroundColor" red="0.42944717982584296" green="0.47100842299586376" blue="0.5842605744949495" alpha="1" colorSpace="calibratedRGB"/>

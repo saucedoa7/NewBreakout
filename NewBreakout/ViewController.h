@@ -11,5 +11,6 @@
 @interface ViewController : UIViewController
 
 @property int livesCount;
+@property int count;
 @end
 

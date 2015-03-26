@@ -24,9 +24,7 @@
 
 @implementation ViewController
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
-
+-(void)viewWillAppear:(BOOL)animated{
     self.livesCount = 3;
     NSLog(@"Lives Started: %d", self.livesCount);
 
@@ -38,10 +36,14 @@
     [self.view addSubview:self.paddleView];
     [self.view addSubview:self.ballView];
     [self.view addSubview:self.blockView];
+}
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
 
     float randomDirectionX = ((int)arc4random_uniform(21) -10)/(float)10;
     float randomDirectionY = (arc4random()%10 +5)/(float)10;
-    float randomMagnintude = .30; //((arc4random()%(8 - 4))+4)/(float)10;
+    float randomMagnintude = .10; //((arc4random()%(8 - 4))+4)/(float)10;
     NSLog(@"Rando %.2f = X, %.2f = Y, %.2f = Mag", randomDirectionX, randomDirectionY, randomMagnintude);
 
     self.dynamicAnimator = [[UIDynamicAnimator alloc] initWithReferenceView:self.view];
@@ -79,7 +81,7 @@
             self.dynamicPaddleBehavior = [[UIDynamicItemBehavior alloc] initWithItems:@[self.paddleView, self.blockView]];
             self.dynamicPaddleBehavior.allowsRotation = NO;
             self.dynamicPaddleBehavior.friction = 0.0;
-            self.dynamicPaddleBehavior.elasticity = 1.0;
+            self.dynamicPaddleBehavior.elasticity = 0.0;
             self.dynamicPaddleBehavior.resistance = 0.0;
             self.dynamicPaddleBehavior.density = 100000;
             [self.dynamicAnimator addBehavior:self.dynamicPaddleBehavior];
@@ -95,35 +97,42 @@
     [self.dynamicAnimator addBehavior:self.pushBehavior];
 }
 
--(void)collisionBehavior:(UICollisionBehavior *)behavior beganContactForItem:(id<UIDynamicItem>)item withBoundaryIdentifier:(id<NSCopying>)identifier atPoint:(CGPoint)p{
+-(void)collisionBehavior:(UICollisionBehavior *)behavior
+     beganContactForItem:(id<UIDynamicItem>)item
+  withBoundaryIdentifier:(id<NSCopying>)identifier
+                 atPoint:(CGPoint)p{
 
-    if (p.y > 605) {
+    self.count++;
 
-        self.livesCount--;
+    if (self.count == 16) {
+        self.count = 0;
 
-        if (self.livesCount == 0) {
-            NSLog(@"Game Over!");
-            self.livesCount = 3;
+        if (p.y > 600) {
+
+            self.livesCount--;
+
+            if (self.livesCount == 0) {
+                NSLog(@"Game Over!");
+                self.livesCount = 3;
+            }
+            NSLog(@"Lives left: %d", self.livesCount);
+
+            //  This method resets the ball when it travels off the frame, and
+            //  re-initializes the ball and its behavior for a fresh instance
+            //  of the ball.
+
+            CGPoint currentVelocity = [self.dynamicBallBehavior linearVelocityForItem:self.ballView];
+            [self.dynamicBallBehavior addLinearVelocity:CGPointMake(-currentVelocity.x, -currentVelocity.y)
+                                                forItem:self.ballView];
+            self.ballView.center = CGPointMake(175, 320);
+            [self.dynamicAnimator updateItemUsingCurrentState:self.ballView];
+            self.pushBehavior.pushDirection = CGVectorMake(arc4random(), arc4random());
+            self.pushBehavior.magnitude = .3;
+            self.pushBehavior.active = YES;
         }
-        NSLog(@"Lives left: %d", self.livesCount);
-
-        //  This method resets the ball when it travels off the frame, and
-        //  re-initializes the ball and its behavior for a fresh instance
-        //  of the ball.
-
-        CGPoint currentVelocity = [self.dynamicBallBehavior linearVelocityForItem:self.ballView];
-        [self.dynamicBallBehavior addLinearVelocity:CGPointMake(-currentVelocity.x, -currentVelocity.y)
-                                            forItem:self.ballView];
-        self.ballView.center = CGPointMake(175, 320);
-        [self.dynamicAnimator updateItemUsingCurrentState:self.ballView];
-        self.pushBehavior.pushDirection = CGVectorMake(arc4random(), arc4random());
-        self.pushBehavior.magnitude = .3;
-        self.pushBehavior.active = YES;
     }
-
-    //NSLog(@"CGPoint %@", NSStringFromCGPoint(p));
-
 }
+
 - (IBAction)draggPaddle:(UIPanGestureRecognizer *)sender {
     self.paddleView.center = CGPointMake([sender locationInView:self.view].x, self.paddleView.center.y);
     [self.dynamicAnimator updateItemUsingCurrentState:self.paddleView];
