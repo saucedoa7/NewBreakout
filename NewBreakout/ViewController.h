@@ -12,5 +12,7 @@
 
 @property int livesCount;
 @property int count;
+@property int countTwo;
+@property NSMutableArray *blocksRemoved;
 @end
 

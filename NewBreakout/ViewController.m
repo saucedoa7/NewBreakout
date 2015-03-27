@@ -32,6 +32,7 @@
     self.ballView.clipsToBounds = YES;
 
     self.blockView = [BlockView new];
+    self.blocksRemoved = [NSMutableArray new];
 
     [self.view addSubview:self.paddleView];
     [self.view addSubview:self.ballView];
@@ -43,7 +44,7 @@
 
     float randomDirectionX = ((int)arc4random_uniform(21) -10)/(float)10;
     float randomDirectionY = (arc4random()%10 +5)/(float)10;
-    float randomMagnintude = .10; //((arc4random()%(8 - 4))+4)/(float)10;
+    float randomMagnintude = .20; //((arc4random()%(8 - 4))+4)/(float)10;
     NSLog(@"Rando %.2f = X, %.2f = Y, %.2f = Mag", randomDirectionX, randomDirectionY, randomMagnintude);
 
     self.dynamicAnimator = [[UIDynamicAnimator alloc] initWithReferenceView:self.view];
@@ -127,9 +128,35 @@
             self.ballView.center = CGPointMake(175, 320);
             [self.dynamicAnimator updateItemUsingCurrentState:self.ballView];
             self.pushBehavior.pushDirection = CGVectorMake(arc4random(), arc4random());
-            self.pushBehavior.magnitude = .3;
+            self.pushBehavior.magnitude = .2;
             self.pushBehavior.active = YES;
         }
+    }
+}
+
+-(void)collisionBehavior:(UICollisionBehavior *)behavior
+     beganContactForItem:(id<UIDynamicItem>)item1
+                withItem:(id<UIDynamicItem>)item2
+                 atPoint:(CGPoint)p{
+
+    self.countTwo++;
+    if (self.countTwo == 16) {
+        self.countTwo = 0;
+//        NSLog(@"Collision object %@", behavior);
+//        NSLog(@"Item 1 object %@", item1);
+//        NSLog(@"Item 2 object %@", item2);
+//        NSLog(@"Point object %@ \n", NSStringFromCGPoint(p));
+    }
+
+    if (item2 == self.ballView) {
+        item2 = nil;
+    }
+
+    if (item2 != nil) {
+        NSLog(@"Item 2 object %@", item2);
+        [self.blocksRemoved addObject:item2];
+        NSLog(@"Blocks in array %@", self.blocksRemoved);
+        NSLog(@"Item 2 object after %@", item2);
     }
 }
 
